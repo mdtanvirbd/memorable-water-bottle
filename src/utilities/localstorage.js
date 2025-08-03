@@ -1,18 +1,28 @@
-const getStoreCart = () =>{
-   const storeCartString = localStorage.getItem('cart')
-   if(storeCartString){
-    return JSON.parse(storeCartString)
-   }
-   return [];
-}
-const saveCartTols = cart =>{
-    const cartStringified = JSON.stringify(cart);
-    localStorage.setItem('cart', cartStringified)
+const getStoredCart = () => {
+    const storedCartString = localStorage.getItem('cart');
+    if (storedCartString) {
+        return JSON.parse(storedCartString)
+    }
+    return [];
 }
 
-const addToLS = id =>{
-    const cart = getStoreCart();
-    cart.push(id)
-    saveCartTols(cart)
+const saveCartToLS = cart => {
+    const cartStringified = JSON.stringify(cart);
+    localStorage.setItem('cart', cartStringified);
 }
-export {addToLS}
+
+const addToLS = id => {
+    const cart = getStoredCart();
+    cart.push(id);
+    // save to local storage
+    saveCartToLS(cart);
+}
+
+const removeFromLS = id => {
+    const cart = getStoredCart();
+    // removing every id
+    const remaining = cart.filter(idx => idx !== id);
+    saveCartToLS(remaining);
+}
+
+export { addToLS, getStoredCart, removeFromLS }
